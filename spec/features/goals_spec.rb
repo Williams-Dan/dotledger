@@ -13,8 +13,8 @@ feature 'Goals', truncate: true, js: true do
     end
 
     background do
-      essential_category.goal.update_attributes(amount: 125, period: 'Week')
-      flexible_category.goal.update_attributes(amount: 100)
+      essential_category.goal.update(amount: 125, period: 'Week')
+      flexible_category.goal.update(amount: 100)
     end
 
     before do

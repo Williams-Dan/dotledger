@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Api::SavedSearchesController do
-  let!(:saved_search) { FactoryBot.create :saved_search, name: 'Saved Search' }
+  let!(:saved_search) { FactoryBot.create(:saved_search, name: 'Saved Search') }
 
   describe 'GET index' do
     before { get :index }
@@ -14,7 +14,7 @@ describe Api::SavedSearchesController do
   end
 
   describe 'GET show' do
-    before { get :show, id: saved_search.id }
+    before { get :show, params: { id: saved_search.id } }
 
     it { should respond_with :success }
 
@@ -25,7 +25,16 @@ describe Api::SavedSearchesController do
 
   describe 'POST create' do
     def valid_request
-      post :create, name: 'Other Saved Search'
+      post :create, params: { 
+        name: 'Other Saved Search', 
+        account_id: 2, 
+        category_id: 4, 
+        category_type: 'Flexible', 
+        period_from: 'Beginning of year',
+        period_to: 'End of year',
+        review: 'false',
+        query: 'things'
+      }
     end
 
     it 'responds with 200' do
@@ -42,7 +51,7 @@ describe Api::SavedSearchesController do
 
   describe 'PUT update' do
     def valid_request
-      put :update, id: saved_search.id, name: 'New Saved Search'
+      put :update, params: { id: saved_search.id, name: 'New Saved Search' }
     end
 
     it 'responds with 200' do
@@ -59,7 +68,7 @@ describe Api::SavedSearchesController do
 
   describe 'DELETE destroy' do
     def valid_request
-      delete :destroy, id: saved_search.id
+      delete :destroy, params: { id: saved_search.id }
     end
 
     it 'responds with 204' do

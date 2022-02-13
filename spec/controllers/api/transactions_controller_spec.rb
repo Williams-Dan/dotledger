@@ -60,7 +60,7 @@ describe Api::TransactionsController do
 
     context 'filter by account_id' do
       before do
-        get :index, account_id: account.id
+        get :index, params: { account_id: account.id }
       end
 
       it { should respond_with :success }
@@ -72,7 +72,7 @@ describe Api::TransactionsController do
 
     context 'filter sorted' do
       before do
-        get :index, sorted: true
+        get :index, params: { sorted: true }
       end
 
       it { should respond_with :success }
@@ -84,7 +84,7 @@ describe Api::TransactionsController do
 
     context 'filter unsorted' do
       before do
-        get :index, unsorted: true
+        get :index, params: { unsorted: true }
       end
 
       it { should respond_with :success }
@@ -96,7 +96,7 @@ describe Api::TransactionsController do
 
     context 'filter flagged for review' do
       before do
-        get :index, review: true
+        get :index, params: { review: true }
       end
 
       it { should respond_with :success }
@@ -108,7 +108,7 @@ describe Api::TransactionsController do
 
     context 'filter not flagged for review' do
       before do
-        get :index, review: false
+        get :index, params: { review: false }
       end
 
       it { should respond_with :success }
@@ -120,7 +120,7 @@ describe Api::TransactionsController do
 
     context 'filter search query' do
       before do
-        get :index, query: 'test'
+        get :index, params: { query: 'test' }
       end
 
       it { should respond_with :success }
@@ -132,7 +132,7 @@ describe Api::TransactionsController do
 
     context 'filter with category' do
       before do
-        get :index, category_id: category.id
+        get :index, params: { category_id: category.id }
       end
 
       it { should respond_with :success }
@@ -144,7 +144,7 @@ describe Api::TransactionsController do
 
     context 'filter with category type' do
       before do
-        get :index, category_type: other_category.type
+        get :index, params: { category_type: other_category.type }
       end
 
       it { should respond_with :success }
@@ -158,7 +158,7 @@ describe Api::TransactionsController do
       let!(:transaction_during) { FactoryBot.create :transaction, posted_at: Date.parse('2012-04-10') }
 
       before do
-        get :index, date_from: '2012-04-01', date_to: '2012-04-30'
+        get :index, params: { date_from: '2012-04-01', date_to: '2012-04-30' }
       end
 
       it { should respond_with :success }
@@ -174,7 +174,7 @@ describe Api::TransactionsController do
       let!(:transaction_match_2) { FactoryBot.create :transaction, sorted_transaction: FactoryBot.create(:sorted_transaction, tag_ids: [tag.id]) }
 
       before do
-        get :index, tag_ids: tag.id
+        get :index, params: { tag_ids: tag.id }
       end
 
       it { should respond_with :success }
@@ -186,7 +186,7 @@ describe Api::TransactionsController do
   end
 
   describe 'GET show' do
-    before { get :show, id: transaction.id }
+    before { get :show, params: { id: transaction.id } }
 
     it { should respond_with :success }
 
@@ -199,7 +199,7 @@ describe Api::TransactionsController do
     def valid_request
       attributes = FactoryBot.attributes_for(:transaction)
       attributes[:account_id] = account.id
-      post :create, attributes
+      post :create, params: attributes
     end
 
     it 'responds with 200' do
@@ -216,9 +216,10 @@ describe Api::TransactionsController do
 
   describe 'PUT update' do
     def valid_request
-      put :update,
+      put :update, params: {
         id: transaction.id,
         name: 'New Transaction Name'
+      }
     end
 
     it 'responds with 200' do
@@ -235,8 +236,9 @@ describe Api::TransactionsController do
 
   describe 'DELETE destroy' do
     def valid_request
-      delete :destroy,
+      delete :destroy, params: {
         id: transaction.id
+      }
     end
 
     it 'responds with 204' do
@@ -262,7 +264,7 @@ describe Api::TransactionsController do
     context 'with account_id' do
       let(:account) { FactoryBot.create :account }
       it 'responds with 200' do
-        post :sort, account_id: account.id
+        post :sort, params: { account_id: account.id }
         expect(subject).to respond_with(:success)
       end
     end

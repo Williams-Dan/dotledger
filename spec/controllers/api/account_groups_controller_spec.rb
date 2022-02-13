@@ -14,7 +14,7 @@ describe Api::AccountGroupsController do
   end
 
   describe 'GET show' do
-    before { get :show, id: account_group.id }
+    before { get :show, params: { id: account_group.id } }
 
     it { should respond_with :success }
 
@@ -25,7 +25,7 @@ describe Api::AccountGroupsController do
 
   describe 'POST create' do
     def valid_request
-      post :create, name: 'Other Account Group'
+      post :create, params: { name: 'Other Account Group' }
     end
 
     it 'responds with 200' do
@@ -42,7 +42,7 @@ describe Api::AccountGroupsController do
 
   describe 'PUT update' do
     def valid_request
-      put :update, id: account_group.id, name: 'New Account Group'
+      put :update, params: { id: account_group.id, name: 'New Account Group' }
     end
 
     it 'responds with 200' do
@@ -59,7 +59,7 @@ describe Api::AccountGroupsController do
 
   describe 'DELETE destroy' do
     def valid_request
-      delete :destroy, id: account_group.id
+      delete :destroy, params: { id: account_group.id }
     end
 
     it 'responds with 204' do

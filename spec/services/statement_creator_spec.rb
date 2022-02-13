@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe StatementCreator do
   let(:account) { FactoryBot.create :account }
-  let(:file) { File.open("#{fixture_path}/example.ofx") }
+  let(:file) { File.open("#{fixture_path}/files/example.ofx") }
   let(:blank_file) { File.open("#{fixture_path}/blank.txt") }
 
   describe 'valid' do

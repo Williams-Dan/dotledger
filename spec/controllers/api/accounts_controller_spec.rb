@@ -16,7 +16,7 @@ describe Api::AccountsController do
     end
     
     context 'filter archived' do
-      before { get :index, archived: true }
+      before { get :index, params: { archived: true } }
 
       it { should respond_with :success }
 
@@ -27,7 +27,7 @@ describe Api::AccountsController do
   end
 
   describe 'GET show' do
-    before { get :show, id: account.id }
+    before { get :show, params: { id: account.id } }
 
     it { should respond_with :success }
 
@@ -38,10 +38,13 @@ describe Api::AccountsController do
 
   describe 'POST create' do
     def valid_request
-      post :create,
+      post :create, params: {
         name: 'Account Name',
         number: '1212341234567120',
-        type: 'Cheque'
+        type: 'Cheque',
+        account_group_id: 2,
+        archived: false
+      }
     end
 
     it 'responds with 200' do
@@ -58,9 +61,7 @@ describe Api::AccountsController do
 
   describe 'PUT update' do
     def valid_request
-      put :update,
-        id: account.id,
-        name: 'New Account Name'
+      put :update, params: { id: account.id, name: 'New Account Name' }
     end
 
     it 'responds with 200' do
@@ -77,8 +78,7 @@ describe Api::AccountsController do
 
   describe 'DELETE destroy' do
     def valid_request
-      delete :destroy,
-        id: account.id
+      delete :destroy, params: { id: account.id }
     end
 
     it 'responds with 204' do

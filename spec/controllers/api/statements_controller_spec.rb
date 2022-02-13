@@ -19,7 +19,7 @@ describe Api::StatementsController do
 
     context 'filter by account_id' do
       before do
-        get :index, account_id: account.id
+        get :index, params: { account_id: account.id }
       end
 
       it { should respond_with :success }
@@ -31,7 +31,7 @@ describe Api::StatementsController do
   end
 
   describe 'GET show' do
-    before { get :show, id: statement.id }
+    before { get :show, params: { id: statement.id } }
 
     it { should respond_with :success }
 
@@ -42,8 +42,10 @@ describe Api::StatementsController do
 
   describe 'POST create' do
     def valid_request
-      post :create, account_id: account.id,
-        file: fixture_file_upload('example.ofx')
+      post :create, params: { 
+        account_id: account.id,
+        file: fixture_file_upload('example.ofx') 
+      }
     end
 
     it 'responds with 200' do
@@ -66,8 +68,9 @@ describe Api::StatementsController do
 
   describe 'DELETE destroy' do
     def valid_request
-      delete :destroy,
+      delete :destroy, params: {
         id: statement.id
+      }
     end
 
     it 'responds with 204' do

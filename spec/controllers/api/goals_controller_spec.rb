@@ -15,7 +15,7 @@ describe Api::GoalsController do
   end
 
   describe 'GET show' do
-    before { get :show, id: goal.id }
+    before { get :show, params: { id: goal.id } }
 
     it { should respond_with :success }
 
@@ -26,9 +26,10 @@ describe Api::GoalsController do
 
   describe 'POST create' do
     def valid_request
-      post :create,
+      post :create, params: {
         amount: 1000,
         category_id: category.id
+      }
     end
 
     it 'responds with 200' do
@@ -45,11 +46,12 @@ describe Api::GoalsController do
 
   describe 'PUT update' do
     def valid_request
-      put :update,
+      put :update, params: {
         id: goal.id,
         amount: 500,
         type: 'Receive',
         period: 'Week'
+      }
     end
 
     it 'responds with 200' do
@@ -78,8 +80,9 @@ describe Api::GoalsController do
 
   describe 'DELETE destroy' do
     def valid_request
-      delete :destroy,
+      delete :destroy, params: {
         id: goal.id
+      }
     end
 
     it 'responds with 204' do

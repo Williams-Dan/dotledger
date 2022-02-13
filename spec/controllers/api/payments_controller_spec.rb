@@ -16,7 +16,7 @@ describe Api::PaymentsController do
   end
 
   describe 'GET show' do
-    before { get :show, id: payment.id }
+    before { get :show, params: { id: payment.id } }
 
     it { should respond_with :success }
 
@@ -27,11 +27,12 @@ describe Api::PaymentsController do
 
   describe 'POST create' do
     def valid_request
-      post :create,
+      post :create, params: {
         name: 'Some Payment',
         type: 'Spend',
         amount: 1000,
         category_id: category.id
+      }
     end
 
     it 'responds with 200' do
@@ -48,9 +49,10 @@ describe Api::PaymentsController do
 
   describe 'PUT update' do
     def valid_request
-      put :update,
+      put :update, params: {
         id: payment.id,
         amount: 500
+      }
     end
 
     it 'responds with 200' do
@@ -67,8 +69,9 @@ describe Api::PaymentsController do
 
   describe 'DELETE destroy' do
     def valid_request
-      delete :destroy,
+      delete :destroy, params: {
         id: payment.id
+      }
     end
 
     it 'responds with 204' do

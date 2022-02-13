@@ -8,7 +8,8 @@ gem 'mysql2', '0.5.3'
 gem 'sass-rails', '6.0.0'
 gem 'uglifier', '4.2.0'
 gem 'jquery-rails', '4.4.0'
-gem 'ofx', '0.3.2'
+#gem 'ofx', '0.3.2'
+gem 'ofx', git: 'https://github.com/annacruz/ofx.git', branch: 'master' # Just until we get a release for this version
 gem 'ejs', '1.1.1'
 gem 'kaminari', '1.2.2'
 gem 'active_model_serializers', '0.10.13'
@@ -20,6 +21,7 @@ gem 'puma', '5.6.1'
 group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails', '~> 5.1.0'
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -30,7 +32,6 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'factory_bot_rails'
   gem 'shoulda-matchers'
   gem 'sqlite3', '~> 1.4'
   gem 'rspec-collection_matchers'

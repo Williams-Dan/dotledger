@@ -46,7 +46,7 @@ module Api
 
     def saved_search_params
       params.permit(:name, :query, :category_id, :category_type, :date_from,
-        :date_to, :account_id, :review, :period_from, :period_to, tag_ids: [])
+        :date_to, :account_id, :review, :period_from, :period_to, tag_ids: [], :format, :saved_search)
     end
   end
 end

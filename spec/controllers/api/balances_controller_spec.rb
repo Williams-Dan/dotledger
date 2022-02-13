@@ -20,7 +20,7 @@ describe Api::BalancesController do
           account: account
         )
 
-        get :index, account_id: account.id
+        get :index, params: { account_id: account.id }
       end
     end
 
@@ -34,7 +34,7 @@ describe Api::BalancesController do
           account: account
         )
 
-        get :index, account_id: account.id, date: date
+        get :index, params: { account_id: account.id, date: date }
       end
     end
 
@@ -49,7 +49,7 @@ describe Api::BalancesController do
           account: account
         )
 
-        get :index, account_id: account.id, date_from: date_from, date_to: date_to
+        get :index, params: { account_id: account.id, date_from: date_from, date_to: date_to }
       end
     end
   end
@@ -77,7 +77,7 @@ describe Api::BalancesController do
           opening_balance: 1000.0
         )
 
-        get :projected, date: date
+        get :projected, params: { date: date }
       end
     end
 
@@ -92,7 +92,7 @@ describe Api::BalancesController do
           opening_balance: 1000.0
         )
 
-        get :projected, date_from: date_from, date_to: date_to
+        get :projected, params: { date_from: date_from, date_to: date_to }
       end
     end
   end

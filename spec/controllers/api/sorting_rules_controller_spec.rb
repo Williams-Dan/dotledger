@@ -26,7 +26,7 @@ describe Api::SortingRulesController do
 
     context 'filter search query' do
       before do
-        get :index, query: 'test'
+        get :index, params: { query: 'test' }
       end
 
       it { should respond_with :success }
@@ -38,7 +38,7 @@ describe Api::SortingRulesController do
 
     context 'filter with category' do
       before do
-        get :index, category_id: category_1.id
+        get :index, params: { category_id: category_1.id }
       end
 
       it { should respond_with :success }
@@ -50,7 +50,7 @@ describe Api::SortingRulesController do
 
     context 'filter with category type' do
       before do
-        get :index, category_type: 'Flexible'
+        get :index, params: { category_type: 'Flexible' }
       end
 
       it { should respond_with :success }
@@ -62,7 +62,7 @@ describe Api::SortingRulesController do
 
     context 'filter with tags' do
       before do
-        get :index, tag_ids: tag.id
+        get :index, params: { tag_ids: tag.id }
       end
 
       it { should respond_with :success }
@@ -74,7 +74,7 @@ describe Api::SortingRulesController do
   end
 
   describe 'GET show' do
-    before { get :show, id: sorting_rule.id }
+    before { get :show, params: { id: sorting_rule.id } }
 
     it { should respond_with :success }
 
@@ -85,10 +85,11 @@ describe Api::SortingRulesController do
 
   describe 'POST create' do
     def valid_request
-      post :create,
+      post :create, params: {
         name: 'New Name',
         contains: 'Foobar',
         category_id: category_1.id
+      }
     end
 
     it 'responds with 200' do
@@ -105,9 +106,10 @@ describe Api::SortingRulesController do
 
   describe 'PUT update' do
     def valid_request
-      put :update,
+      put :update, params: {
         id: sorting_rule.id,
         name: 'Some New Name'
+      }
     end
 
     it 'responds with 200' do
@@ -124,8 +126,9 @@ describe Api::SortingRulesController do
 
   describe 'DELETE destroy' do
     def valid_request
-      delete :destroy,
+      delete :destroy, params: {
         id: sorting_rule.id
+      }
     end
 
     it 'responds with 204' do

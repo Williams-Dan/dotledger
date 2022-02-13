@@ -7,6 +7,9 @@ describe DotLedgerImporter do
       'AccountGroups' => [
         {
           'name' => 'Savings'
+        },
+        {
+          'name' => 'Checking'
         }
       ],
       'Accounts' => [
@@ -14,7 +17,7 @@ describe DotLedgerImporter do
           'name' => 'Eftpos',
           'number' => '1212341234567121',
           'type' => 'Cheque',
-          'account_group_name' => nil
+          'account_group_name' => 'Checking'
         },
         {
           'name' => 'Savings',
@@ -61,9 +64,10 @@ describe DotLedgerImporter do
   it 'imports the account groups' do
     expect do
       subject.import
-    end.to change(AccountGroup, :count).by(1)
+    end.to change(AccountGroup, :count).by(2)
 
     expect(subject.data['AccountGroups'].first.name).to eq('Savings')
+    expect(subject.data['AccountGroups'].second.name).to eq('Checking')
   end
 
   it 'imports the accounts' do

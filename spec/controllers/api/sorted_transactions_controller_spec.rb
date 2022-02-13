@@ -17,7 +17,7 @@ describe Api::SortedTransactionsController do
   end
 
   describe 'GET show' do
-    before { get :show, id: sorted_transaction.id }
+    before { get :show, params: { id: sorted_transaction.id } }
 
     it { should respond_with :success }
 
@@ -32,7 +32,7 @@ describe Api::SortedTransactionsController do
       attributes[:account_id] = account.id
       attributes[:transaction_id] = transaction.id
       attributes[:category_id] = category.id
-      post :create, attributes
+      post :create, params:  attributes 
     end
 
     it 'responds with 200' do
@@ -49,9 +49,10 @@ describe Api::SortedTransactionsController do
 
   describe 'PUT update' do
     def valid_request
-      put :update,
+      put :update, params: {
         id: sorted_transaction.id,
         name: 'New Sorted Transaction Name'
+      }
     end
 
     it 'responds with 200' do
@@ -68,8 +69,9 @@ describe Api::SortedTransactionsController do
 
   describe 'DELETE destroy' do
     def valid_request
-      delete :destroy,
+      delete :destroy, params: {
         id: sorted_transaction.id
+      }
     end
 
     it 'responds with 204' do

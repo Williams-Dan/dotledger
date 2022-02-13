@@ -1,20 +1,23 @@
 require 'rails_helper'
 
 describe DotLedgerExporter do
-  let!(:account_group) do
+  let!(:account_group_saving) do
     FactoryBot.create :account_group, name: 'Savings'
   end
+  let!(:account_group_checking) do
+    FactoryBot.create :account_group, name: 'Checking'
+  end
   let!(:account) do
-    FactoryBot.create :account, name: 'Eftpos', number: '1212341234567121', type: 'Cheque', account_group: nil
+    FactoryBot.create :account, name: 'Eftpos', number: '1212341234567121', type: 'Cheque', account_group: account_group_checking
   end
   let!(:account_2) do
-    FactoryBot.create :account, name: 'Savings', number: '1212341234567122', type: 'Savings', account_group: account_group
+    FactoryBot.create :account, name: 'Savings', number: '1212341234567122', type: 'Savings', account_group: account_group_saving
   end
   let!(:category) do
     FactoryBot.create :category, name: 'Category 1', type: 'Essential'
   end
   let!(:goal) do
-    category.goal.update_attributes(amount: 123.45)
+    category.goal.update(amount: 123.45)
   end
   let!(:sorting_rule) do
     FactoryBot.create :sorting_rule, name: 'Name 1', contains: 'Contains 1', category: category, tag_list: %w[foo bar], review: true
@@ -25,6 +28,9 @@ describe DotLedgerExporter do
       'AccountGroups' => [
         {
           'name' => 'Savings'
+        },
+        {
+          'name' => 'Checking'
         }
       ],
       'Accounts' => [
@@ -32,7 +38,7 @@ describe DotLedgerExporter do
           'name' => 'Eftpos',
           'number' => '1212341234567121',
           'type' => 'Cheque',
-          'account_group_name' => nil
+          'account_group_name' => 'Checking'
         },
         {
           'name' => 'Savings',
